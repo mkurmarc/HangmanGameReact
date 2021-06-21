@@ -89,11 +89,19 @@ class Hangman extends Component {
         />
         <p className='Hangman-guesses'>{`Number Wrong: ${this.state.nWrong} out 
         of ${this.props.maxWrong}`}</p>
-        <p className='Hangman-word'>{this.guessedWord()}</p>
+        <p className='Hangman-word'>
+          {!this.isLoser()
+            ? this.guessedWord()
+            : this.state.answer
+          }
+        </p>
         
-        {this.isLoser()
-          ? <p>You Lose and the correct word: {this.state.answer}</p>
-          : <p className='Hangman-btns'>{this.generateButtons()}</p>}
+        <p className='Hangman-btns'>
+          {this.isLoser()
+            ? <p>You Lose!</p>
+            : this.generateButtons()
+          }
+        </p>
         
         {this.isLoser() && (
           <button 
