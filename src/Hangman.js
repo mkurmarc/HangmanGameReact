@@ -44,8 +44,10 @@ class Hangman extends Component {
 
   /** generateButtons: return array of letter buttons to render */
   generateButtons() {
+    let keyVal = 1;
     return "abcdefghijklmnopqrstuvwxyz".split("").map(ltr => (
       <button
+        key={keyVal += 1}
         value={ltr}
         onClick={this.handleGuess}
         disabled={this.state.guessed.has(ltr)}
