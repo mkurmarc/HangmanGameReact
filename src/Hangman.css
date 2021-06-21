@@ -24,6 +24,12 @@
   font-size: 2rem;
 }
 
+.Hangman-restartButton {
+  width: 1500px;
+  text-align: center;
+  display: inline-block;
+}
+
 .Hangman-btns {
   text-align: center;
   display: inline-block;
@@ -46,6 +52,8 @@
   border-radius: 5px;
   padding-top: 4px;
 }
+
+
 
 .Hangman button:hover {
   background-color: #ff9800;
