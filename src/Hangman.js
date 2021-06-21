@@ -62,9 +62,12 @@ class Hangman extends Component {
 
   handleRestart() {
     let wordRandom = randomWord();
-    this.setState(st => ({
-      nWrong: 0, guessed: new Set(), answer: wordRandom, isWinner: false
-    }));
+    this.setState({
+      nWrong: 0, 
+      guessed: new Set(), 
+      answer: wordRandom, 
+      isWinner: false
+    });
   }
 
   isLoser() {
@@ -74,12 +77,28 @@ class Hangman extends Component {
     return false;
   }
 
-  // isWinner() {
-    
-  // }
+  isWinner() {
+    if(this.guessedWord().join("") === this.state.answer) {
+      return true;
+    }
+    return false;
+  }
 
   /** render: render game */
   render() {
+    // const renderBtnArea = () => {
+    //   if(this.isLoser()) {
+    //     return "You Lose!"
+
+    //   } else if(this.isWinner()) {
+    //     return "You Win!"
+
+    //   } else {
+    //     return this.generateButtons()
+
+    //   }
+    // }
+
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
@@ -95,22 +114,22 @@ class Hangman extends Component {
             : this.state.answer
           }
         </p>
-        
+
         <p className='Hangman-btns'>
           {this.isLoser()
-            ? <p>You Lose!</p>
+            ? "You Lose!"
             : this.generateButtons()
           }
+          {this.isWinner() && "You Win!"}
+          {/* {renderBtnArea()} */}
         </p>
-        
-        {this.isLoser() && (
-          <button 
-            id='restartBtn'
-            onClick={this.handleRestart}
-          >
-            Restart
-          </button>
-        )}
+
+        <button 
+          id='restartBtn'
+          onClick={this.handleRestart}
+        >
+          Restart
+        </button>        
       </div>
     );
   }
