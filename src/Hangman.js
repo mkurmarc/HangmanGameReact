@@ -7,6 +7,7 @@ import img3 from "./3.jpg";
 import img4 from "./4.jpg";
 import img5 from "./5.jpg";
 import img6 from "./6.jpg";
+import { randomWord } from "./words";
 
 class Hangman extends Component {
   /** by default, allow 6 guesses and use provided gallows images. */
@@ -16,9 +17,11 @@ class Hangman extends Component {
   };
 
   constructor(props) {
+    let wordRandom = randomWord();
     super(props);
-    this.state = { nWrong: 0, guessed: new Set(), answer: "apple", isWinner: false };
+    this.state = { nWrong: 0, guessed: new Set(), answer: wordRandom, isWinner: false };
     this.handleGuess = this.handleGuess.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
   }
 
   /** guessedWord: show current-state of word:
@@ -57,6 +60,13 @@ class Hangman extends Component {
     ));
   }
 
+  handleRestart() {
+    let wordRandom = randomWord();
+    this.setState(st => ({
+      nWrong: 0, guessed: new Set(), answer: wordRandom, isWinner: false
+    }));
+  }
+
   isLoser() {
     if(this.state.nWrong === this.props.maxWrong) {
       return true;
@@ -64,22 +74,35 @@ class Hangman extends Component {
     return false;
   }
 
+  // isWinner() {
+    
+  // }
+
   /** render: render game */
   render() {
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
-        <img src={this.props.images[this.state.nWrong]} />
+        <img 
+          src={this.props.images[this.state.nWrong]} 
+          alt={`${this.state.nWrong}/${this.props.maxWrong}`}
+        />
         <p className='Hangman-guesses'>{`Number Wrong: ${this.state.nWrong} out 
         of ${this.props.maxWrong}`}</p>
         <p className='Hangman-word'>{this.guessedWord()}</p>
         
         {this.isLoser()
-        ? <p>You Lose and the correct word: {this.state.answer}</p>
-        : <p className='Hangman-btns'>{this.generateButtons()}</p>}
-        {this.isLoser() && 
-          <button className='Hangman-restartButton'>Restart</button>}
-
+          ? <p>You Lose and the correct word: {this.state.answer}</p>
+          : <p className='Hangman-btns'>{this.generateButtons()}</p>}
+        
+        {this.isLoser() && (
+          <button 
+            id='restartBtn'
+            onClick={this.handleRestart}
+          >
+            Restart
+          </button>
+        )}
       </div>
     );
   }

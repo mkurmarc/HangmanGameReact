@@ -24,8 +24,8 @@
   font-size: 2rem;
 }
 
-.Hangman-restartButton {
-  width: 1500px;
+#restartBtn {
+  width: 200px;
   text-align: center;
   display: inline-block;
 }
