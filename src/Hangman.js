@@ -70,19 +70,19 @@ class Hangman extends Component {
     });
   }
 
-  isLoser() {
-    if(this.state.nWrong === this.props.maxWrong) {
-      return true;
-    }
-    return false;
-  }
+  // isLoser() {
+  //   if(this.state.nWrong === this.props.maxWrong) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  isWinner() {
-    if(this.guessedWord().join("") === this.state.answer) {
-      return true;
-    }
-    return false;
-  }
+  // isWinner() {
+  //   if(this.guessedWord().join("") === this.state.answer) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   /** render: render game */
   render() {
@@ -98,36 +98,38 @@ class Hangman extends Component {
 
     //   }
     // }
+    const gameOver = this.state.nWrong >= this.props.maxWrong;
+    const isWinner = this.guessedWord().join("") === this.state.answer;
+    const altText = `Number Wrong: ${this.state.nWrong} out 
+      of ${this.props.maxWrong}`;
+    let gameState = this.generateButtons();
+    if(isWinner) gameState = "You Win!";
+    if(gameOver) gameState ="You Lose";
 
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
         <img 
           src={this.props.images[this.state.nWrong]} 
-          alt={`${this.state.nWrong}/${this.props.maxWrong}`}
+          alt={altText}
         />
-        <p className='Hangman-guesses'>{`Number Wrong: ${this.state.nWrong} out 
-        of ${this.props.maxWrong}`}</p>
+        <p className='Hangman-guesses'>Guessed Wrong: {this.state.nWrong}</p>
         <p className='Hangman-word'>
-          {!this.isLoser()
+          {!gameOver
             ? this.guessedWord()
             : this.state.answer
           }
         </p>
-
         <p className='Hangman-btns'>
-          {this.isLoser()
+          {gameState}
+          {/* {gameOver
             ? "You Lose!"
             : this.generateButtons()
           }
-          {this.isWinner() && "You Win!"}
+          {this.isWinner() && "You Win!"} */}
           {/* {renderBtnArea()} */}
         </p>
-
-        <button 
-          id='restartBtn'
-          onClick={this.handleRestart}
-        >
+        <button id='restartBtn'onClick={this.handleRestart}>
           Restart
         </button>        
       </div>
